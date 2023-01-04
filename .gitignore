@@ -1,0 +1,5 @@
+Socket/node_modules
+Server/node_modules
+Server/.env
+client/node_modules
+client/.env
