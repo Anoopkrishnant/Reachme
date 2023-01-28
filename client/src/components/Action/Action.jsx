@@ -4,7 +4,7 @@ import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 import ReportGmailerrorredRoundedIcon from '@mui/icons-material/ReportGmailerrorredRounded';
 import "./Action.scss";
 import { useDispatch, useSelector } from "react-redux";
-// import { deletePost } from "../../actions/PostAction";
+import { deletePost } from "../../redux/actions/PostActions";
 
 const Actions = React.forwardRef(
   ({ postId, userId, openReportModal, onEdit }, ref) => {
@@ -33,8 +33,7 @@ const Actions = React.forwardRef(
             </li>
           )}
           <li onClick={openReportModal}>
-            <ReportGmailerrorredRoundedIcon />
-            Report
+            <ReportGmailerrorredRoundedIcon /> Report
           </li>
         </ul>
       </div>

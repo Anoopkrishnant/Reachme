@@ -1,13 +1,4 @@
-import axios from "axios"
-const token = localStorage.getItem("token")
-
-const API = axios.create({
-    baseURL: "http://localhost:5000",
-    headers: {
-        Authorization: `Bearer ${token}`
-    }
-})
-
+import API from "./api";
 
 export const getUserDetails = (id) => API.get(`/user/${id}`);
 export const updateProfile = (id, formData) => API.put(`/user/${id}`, formData);

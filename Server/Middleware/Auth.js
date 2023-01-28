@@ -12,6 +12,7 @@ const verifyToken = (req, res, next) => {
   try {
     const user = jwt.verify(token, process.env.JWT_SECRET_KEY);
     req.user = user;
+    console.log(req.user,'xgsgh');
     next();
   } catch (error) {
     if (error.expiredAt) {

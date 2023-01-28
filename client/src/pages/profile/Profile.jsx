@@ -64,7 +64,7 @@ const Profile = () => {
       navigate("/chat");
     } catch (err) {
       console.log(err);
-    }
+
   };
 
   return (
@@ -159,5 +159,5 @@ const Profile = () => {
     </div>
   )
 }
-
+}
 export default Profile

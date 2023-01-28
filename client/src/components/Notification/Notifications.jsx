@@ -7,7 +7,7 @@ import { clearNotifications } from "../../redux/actions/UserAction";
 import { Link } from "react-router-dom";
 import { useRef } from "react";
 import { useEffect } from "react";
-const serverImages = process.env.REACT_APP_PUBLIC_IMAGES;
+const serverImages = process.env.REACT_APP_PUBLIC_FOLDER;
 
 const Notifications = React.forwardRef(({ notifications }, ref) => {
   const dispatch = useDispatch();

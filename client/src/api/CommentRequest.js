@@ -1,12 +1,5 @@
-import axios from "axios"
-const token = localStorage.getItem("token")
+import API from "./api";
 
-const API = axios.create({
-    baseURL: "http://localhost:5000",
-    headers: {
-        Authorization: `Bearer ${token}`
-    }
-})
 
 export const fetchComments = (postId) => API.get(`/comment/${postId}`);
 

@@ -116,7 +116,7 @@ export const followUser = async (req, res) => {
                profilePicture: followingUser.profilePicture,
                message: `${followingUser.username} started following you`,
                time: Date.now(),
-               link: `/profile/${followingUser._id}`
+               link: `/home/profile/${followingUser._id}`
 
             };
 
@@ -214,13 +214,15 @@ export const getFollowers = async (req, res) => {
 // Notifications
 
 export const getNotifications = async (req, res) => {
-   const  userId  = req.params.id;
+   const { userId } = req.user;
    try {
-     const notifications = await userModel.findById(userId)
+     const notifications = await userModel.findById(userId).select({
+       notifications: 1,
+       _id: 0,
+     });
      res.status(200).json(notifications);
    } catch (error) {
-      console.log(error)
-     res.status(500).json("something went wrong!");
+     res.status(500).json("something went wrong");
    }
  };
 

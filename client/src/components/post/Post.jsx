@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import "./post.scss"
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
@@ -7,25 +7,49 @@ import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
 import { Link } from "react-router-dom";
 import Comments from '../comments/Comments';
+import useComponentVisible from "../../hooks/useComponentVisible";
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { likePost } from '../../api/PostRequest';
+import { editPost, likePost } from '../../api/PostRequest';
 import { forwardRef } from 'react';
 import Actions from '../Action/Action'
 
-const Post = forwardRef(({ data },ref) => {
+const Post = forwardRef(({ data }, ref) => {
     const { user } = useSelector((state) => state.authReducer.authData)
     const [commentOpen, setCommentOpen] = useState(false)
+    const [showEdit, setShowEdit] = useState(false);
+    const [openModal, setOpenModal] = useState(false);
+    const { dropdownRef, isComponentVisible, setIsComponentVisible } = useComponentVisible(false);
+    const [caption, setCaption] = useState(data.description)
 
     const [liked, setLiked] = useState(data.likes.includes(user._id))
     const [likes, setLikes] = useState(data.likes.length)
-    const [isVisible, setIsVisible] =useState(false)
 
+    const editRef = useRef();
     const handleLike = () => {
         setLiked((prev) => !prev)
         likePost(data._id, user._id)
         liked ? setLikes((prev) => prev - 1) : setLikes((prev) => prev + 1)
     }
+
+    const handleSubmitEdit = async () => {
+        const newCaption = editRef.current.value;
+        const postId = data._id;
+        if (newCaption.trim().length === 0) return;
+        try {
+          await editPost(postId, newCaption);
+          setCaption(newCaption);
+        } catch (err) {
+          console.log(err);
+        }
+        setShowEdit(false);
+      };
+    
+      useEffect(() => {
+        if (showEdit) {
+          editRef.current.focus();
+        }
+      }, [showEdit]);
 
 
     return (
@@ -42,15 +66,23 @@ const Post = forwardRef(({ data },ref) => {
 
                         </div>
                     </div>
-                    <div onClick={() =>
-                    setIsVisible((pre) => !pre)}>
-                    <MoreHorizOutlinedIcon />
+                    <div className='more-options'>
+                        <div onClick={() => setIsComponentVisible(true)}>
+                            <MoreHorizOutlinedIcon />
+                        </div>
+                        {isComponentVisible && (
+                            <Actions
+                                ref={dropdownRef}
+                                userId={data?.userId}
+                                postId={data?._id}
+                                openReportModal={() => setOpenModal((pre) => !pre)}
+                                onEdit={() => setShowEdit(true)}
+                            />
+                        )}
                     </div>
-
-                    {isVisible&& <Actions/>}
                 </div>
                 <div className="content">
-                    <p>{data? data.description : null}</p>
+                    <p>{data ? data.description : null}</p>
                     <img src={data.image ? process.env.REACT_APP_PUBLIC_FOLDER + data.image : ""} alt="" />
                 </div>
                 <div className="info">

@@ -6,7 +6,8 @@ import VideoLibraryOutlinedIcon from '@mui/icons-material/VideoLibraryOutlined';
 import AddLocationAltOutlinedIcon from '@mui/icons-material/AddLocationAltOutlined';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 import { useDispatch, useSelector } from "react-redux";
-import { uploadPost,uploadImage } from "../../redux/actions/UploadAction";
+import { uploadPost,uploadImage,uploadVideo } from "../../redux/actions/UploadAction";
+
 
 
 
@@ -73,6 +74,19 @@ export default function Modal() {
                 console.log(error);
             }
          }
+         if(video){
+            const data = new FormData()
+            const filename =  Date.now() + video.name;
+            data.append("name", filename)
+            data.append("file", video)
+            newPost.video = filename;
+            console.log(newPost);
+            try {
+                dispatch(uploadVideo(data))
+            } catch (error) {
+                console.log(error);
+            }
+        }
          dispatch(uploadPost(newPost))
          reset();
     }
@@ -101,7 +115,8 @@ export default function Modal() {
                                         <PhotoLibraryOutlinedIcon />
                                         Photo
                                     </div>
-                                    <div className="option" style={{ color: "#38b000" }}>
+                                    <div className="option" style={{ color: "#38b000" }}
+                                     onClick={() => videoRef.current.click()} >
                                         <VideoLibraryOutlinedIcon />
                                         Video
                                     </div>{" "}
@@ -125,8 +140,16 @@ export default function Modal() {
                                             onChange={onImageChange}
                                         />
                                     </div>
+                                    <div style={{ display: "none" }}>
+                                        <input
+                                            type="file"
+                                            name="myImage"
+                                            ref={imageRef}
+                                            onChange={handleVideoChange}
+                                        />
+                                    </div>
                                 </div>
-                                {image && (
+                                {(image || video )&& (
 
                                     <div className="previewImage">
                                         {/* <UilTimes onClick={() => setImage(null)} /> */}

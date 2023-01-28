@@ -13,8 +13,8 @@ import Post from '../../assets/10.png'
 import Settings from '../../assets/11.png'
 // import MarketPlace from '../../assets/12.png'
 import Profile from '../../assets/13.png'
-import { Link } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { Link, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom';
 
 
@@ -22,12 +22,17 @@ import { useParams } from 'react-router-dom';
 const LeftBar = () => {
 
     const { user } = useSelector((state) => state.authReducer.authData)
+    const navigate = useNavigate()
+    const dispatch=useDispatch()
     const params = useParams();
     let User = false;
     if (!params.id || params.id === user._id) {
         User = true;
     }
 
+    const handleLogout=()=>{
+        dispatch({type:"LOGOUT"})
+    }
 
     return (
         <div className="leftBar">
@@ -75,7 +80,7 @@ const LeftBar = () => {
                     </div>
                     <div className="item">
                         <img src={Messages} alt="" />
-                        <span>Messages</span>
+                        <span onClick={()=>navigate('/chat')} style={{cursor:"pointer"}}>Messages</span>
                     </div>
                     <div className="item">
                         <img src={Videos} alt="" />
@@ -98,9 +103,9 @@ const LeftBar = () => {
                         <img src={MarketPlace} alt="" />
                         <span>MarketPlace</span>
                     </div> */}
-                    <div className="item">
+                    <div className="item" onClick={handleLogout}>
                         <img src={Settings} alt="" />
-                        <span>Settings</span>
+                        <span >Logout</span>
                     </div>
                 </div>
             </div>

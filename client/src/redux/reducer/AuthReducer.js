@@ -4,7 +4,7 @@ const authReducer = (state = { authData: null, loading: false, error: false },
       case "AUTH_START":
          return { ...state, loading: true, error: false };
       case "AUTH_SUCCESS":
-         localStorage.setItem("token",action.data.token)
+         localStorage.setItem("token", action.data.token)
          localStorage.setItem("profile", JSON.stringify({ ...action?.data }));
          return { ...state, authData: action.data, loading: false, error: false };
       case "AUTH_FAIL":
@@ -37,7 +37,10 @@ const authReducer = (state = { authData: null, loading: false, error: false },
       //   return {
       //     ...state.authData.user{ ...action.payload },
       //     loading: false, error: false,  };
-
+      case 'LOGOUT':
+         return {
+            undefined
+         }
 
 
       default:

@@ -11,7 +11,6 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { DarkModeContext } from '../../context/darkModeContext';
 import Modal from '../postModal/PostModal';
 import { useDispatch, useSelector } from 'react-redux';
-import { useState } from 'react';
 import Notifications from '../Notification/Notifications'
 import { getNotifications } from '../../redux/actions/UserAction';
 import useComponentVisible from '../../hooks/useComponentVisible';
@@ -26,7 +25,7 @@ function Navbar() {
   const { dropdownRef, isComponentVisible, setIsComponentVisible } =
     useComponentVisible(false);
 
-  const [isVisible, setIsVisible] = useState(false) 
+
 
 
   useEffect(() => {
@@ -54,14 +53,13 @@ function Navbar() {
         <div className="right">
             <PersonOutlineOutlinedIcon />
             <EmailOutlinedIcon onClick={()=>navigate('/chat')} sx={{cursor:"pointer"}} />
+            <div className='notification'>
             <NotificationsOutlinedIcon  onClick={() => setIsComponentVisible(true)} />
-            {/* <NotificationsOutlinedIcon onClick={()=>setIsVisible((pre)=>!pre)} />
-            {isVisible && <Notification/>} */}
             {/* { notifications.length > 0 && <span>{notifications.length}</span>} */}
         {isComponentVisible && notifications.length > 0 && (
           <Notifications ref={dropdownRef} notifications={notifications} />
         )}
-
+             </div>
             <div className="user">
                {/* <img src={} /> 
                <span>{currentUser.name}</span> */}

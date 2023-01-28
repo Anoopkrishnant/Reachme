@@ -1,12 +1,17 @@
-// import axios from "axios"
-// const token = localStorage.getItem("token");
-// const config = {
-//   withCredentials: true,
-//   headers: {
-//     authorization: `Bearer ${token}`,
-//   },
-// };
+import axios from "axios"
+const config = {
+    withCredentials: true,
+};
 
-// const API = axios.create({baseURL: "http://localhost:5000",config})
+const API = axios.create({ baseURL: "http://localhost:5000", config })
+API.interceptors.request.use((config) => {
+    const token = localStorage.getItem("token")
+    config.headers = {
+        Authorization: `Bearer ${token}`,
+    }
+    return config
+}, (err) => {
+    return Promise.reject(err);
+})
 
-// export default API
+export default API

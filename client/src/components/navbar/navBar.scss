@@ -69,6 +69,25 @@
         @include mobile{
             display: none;
         }
+        .notification {
+            position: relative;
+            top:2px;
+           
+          }
+          
+          .notification > span {
+            position: absolute;
+            color: #ffff;
+            text-align: center;
+            top: -2px;
+            right: -10px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            height: 15px;
+            width: 15px;
+            background-color: rgba(255, 0, 0, 0.871);
+            border-radius: 50%;
+          }
 
         .user{
             display: flex;

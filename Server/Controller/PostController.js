@@ -131,23 +131,7 @@ export const likePost = async (req, res) => {
         postAuthor.notifications.unshift(notification);
         await postAuthor.save();
       }
-
-      // if(post.userId.toString() !==userId) {
-      //   const notification ={
-      //     id:uuidv4(),
-      //     title: "Like",
-      //     profilePicture: user.profilePicture,
-      //     message: `${user.username} liked your post`,
-      //     time: Date.now(),
-      //     link: `/profile/${user._id}`
-
-      //   };
-      //   const postAuthor = await userModel.findById(post.userId);
-      //   postAuthor.notifications.unshift(notification)
-      //   await postAuthor.save();
-      // }
-
-
+      
       res.status(201).json({ message: "Post liked successfully" });
     } else {
       await post.updateOne({ $pull: { likes: userId } });

@@ -6,10 +6,10 @@ const router = express.Router()
 
 router.use(verifyToken);
 router.get("/", getAllUsers);
+router.get("/notifications",  getNotifications);
+router.get("/search", searchUser);
 router.get('/:id', getUser)
 router.get("/followers/:id", getFollowers);
-router.get("/search", searchUser);
-router.get("/notifications", getNotifications);
 
 router.put('/:id', updateUser);
 router.put('/:id/follow', followUser);
