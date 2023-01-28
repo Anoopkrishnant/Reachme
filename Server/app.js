@@ -20,6 +20,7 @@ import { Server } from "socket.io"
 const app = express();
 
 // To serve images for public
+app.use(cors(corsOptions))
 app.use(express.static('public'))
 app.use('/posts', express.static("posts"))
 
@@ -28,7 +29,6 @@ app.use(bodyParser.json({ limit: '30mb', extended: true }));
 app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }));
 
 app.use(cookieParser())
-app.use(cors(corsOptions))
 dotenv.config();
 
 mongoose.connect(process.env.MONGOOSE_URL,
