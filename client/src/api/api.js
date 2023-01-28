@@ -3,7 +3,7 @@ const config = {
     withCredentials: true,
 };
 
-const API = axios.create({ baseURL: "http://localhost:5000", config })
+const API = axios.create({ baseURL:process.env.REACT_APP_BASE_URL, config })
 API.interceptors.request.use((config) => {
     const token = localStorage.getItem("token")
     config.headers = {

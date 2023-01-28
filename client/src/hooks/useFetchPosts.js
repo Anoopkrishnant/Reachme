@@ -13,7 +13,7 @@ const useFetchPosts = (id, isTimeline, skip, location) => {
     setPosts([])
   }, [id, isTimeline, location]);
 
-  const url = isTimeline ? `/post/${userId}/timeline` : `/post/user/${id}`;
+  const url = isTimeline ? `process.env.REACT_APP_BASE_URL/post/${userId}/timeline` : `process.env.REACT_APP_BASE_URL/post/user/${id}`;
 
   useEffect(() => {
     const token=localStorage.getItem("token")

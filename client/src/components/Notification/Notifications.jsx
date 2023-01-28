@@ -16,6 +16,7 @@ const Notifications = React.forwardRef(({ notifications }, ref) => {
     dispatch(clearNotifications(userId));
   };
   const cardRefs = useRef([]);
+  const testRef = useRef(null)
   //using intersection observer for animation
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -35,10 +36,11 @@ const Notifications = React.forwardRef(({ notifications }, ref) => {
   }, []);
 
   return (
+
     <div ref={ref} className="notification-list">
       <div>
-        {notifications.map((notification, index) => {
-          cardRefs.current[index] = useRef(null);
+        {notifications.map(( notification, index) => {
+          cardRefs.current[index] = testRef;
           return (
             <div
               key={notification.id}
@@ -61,6 +63,7 @@ const Notifications = React.forwardRef(({ notifications }, ref) => {
         <DeleteOutlineRoundedIcon />
       </div>
     </div>
+ 
   );
 });
 
